@@ -3,6 +3,9 @@ import {Router} from '@angular/router';
 import {Observable, catchError} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
+
+
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -13,8 +16,8 @@ export class HomePage implements OnInit {
   films: Observable<any> | undefined; //Para arrumar o erro da definição do films, devido a atualização do Ionic que obriga a ter um valor de início
   constructor(private router: Router, private http: HttpClient, public toastController: ToastController) {}
 
-  ngOnInit(){
 
+  ngOnInit(){
     this.films = this.http.get('https://swapi.dev/api/films').pipe(
       catchError(erro => this.exibirErro(erro))
     );
@@ -32,9 +35,12 @@ export class HomePage implements OnInit {
     toast.present();
     return null;
   }
+
+
+
   openDetails(film:any){
     let split = film.url.split('/');
-    let filmId = split[split.length-2];
-    this.router.navigateByUrl('/filme-detalhe/${filmId}');
+    let filmId = split[5];
+    this.router.navigateByUrl(`/filme-detalhe/${filmId}`);
   }
 }
